@@ -1,0 +1,1 @@
+{"name":"silicon-sketch","private":true,"type":"module","scripts":{"start":"node scripts/dev.mjs","dev":"node scripts/dev.mjs","test":"node --test","build":"node scripts/build.mjs","examples":"node examples/build.mjs"},"devDependencies":{"@yowasp/yosys":"0.71.188-dev.1267","wrangler":"^4.0.0"}}

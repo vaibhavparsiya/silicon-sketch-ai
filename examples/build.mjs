@@ -1,0 +1,18 @@
+import {runYosys} from '@yowasp/yosys';
+import {synth} from '../web/synth.mjs';
+import {writeFile} from 'node:fs/promises';
+const defs=[
+ ['adder','4-bit ripple carry adder','Four full adders propagate carry from the least significant bit.', 'input [3:0] a,b,input cin, output [3:0] sum,output cout','wire [4:0] c; assign c[0]=cin; genvar i; generate for(i=0;i<4;i=i+1) begin:g assign sum[i]=a[i]^b[i]^c[i]; assign c[i+1]=(a[i]&b[i])|((a[i]^b[i])&c[i]); end endgenerate assign cout=c[4];','reg [3:0] a,b;reg cin;wire [3:0] sum;wire cout;', 'a=15;b=1;cin=0;#1;if({cout,sum}!==16) $stop;', [{label:'15 + 1',inputs:{a:15,b:1,cin:0},expected:{sum:0,cout:1}}]],
+ ['alu','8-bit ALU','Opcodes 0–4 select ADD, SUB, AND, OR, XOR. Carry is carry-out on addition and borrow on subtraction.', 'input [7:0] a,b,input [2:0] opcode,output [7:0] y,output zero,carry', "wire [8:0] r;assign r=opcode==0?{1'b0,a}+b:opcode==1?{1'b0,a}-b:opcode==2?a&b:opcode==3?a|b:opcode==4?a^b:0;assign {carry,y}=r;assign zero=y==0;", 'reg [7:0] a,b;reg [2:0] opcode;wire [7:0] y;wire zero,carry;', 'a=255;b=1;opcode=0;#1;if({carry,zero,y}!==10\'h300) $stop;opcode=4;#1;if(y!==254) $stop;', [{label:'Overflow 255 + 1',inputs:{a:255,b:1,opcode:0},expected:{y:0,carry:1,zero:1}}]],
+ ['counter','4-bit up/down counter','At each rising edge, rst clears the register; otherwise up selects increment or decrement.', 'input clk,rst,up,output reg [3:0] count','always @(posedge clk) if(rst) count<=0;else if(up) count<=count+1;else count<=count-1;','reg clk,rst,up;wire [3:0] count;', 'clk=0;rst=1;up=1;#1;clk=1;#1;if(count!==0) $stop;clk=0;rst=0;#1;clk=1;#1;if(count!==1) $stop;', []],
+ ['pwm','4-bit PWM generator','A four-bit phase counter is compared against duty each clock.', 'input clk,rst,input [3:0] duty,output pwm','reg [3:0] phase;always @(posedge clk) if(rst) phase<=0;else phase<=phase+1;assign pwm=phase<duty;', 'reg clk,rst;reg [3:0] duty;wire pwm;', 'clk=0;rst=1;duty=4;#1;clk=1;#1;if(pwm!==1) $stop;duty=0;#1;if(pwm!==0) $stop;', []],
+ ['traffic','Pedestrian traffic light','Clocked teaching model: a pedestrian request changes vehicle green to amber, then pedestrian walk, then vehicle green.', 'input clk,rst,ped,output green,amber,walk','reg [1:0] state;always @(posedge clk) if(rst) state<=0;else case(state) 0:state<=ped?1:0;1:state<=2;default:state<=0;endcase assign green=state==0;assign amber=state==1;assign walk=state==2;', 'reg clk,rst,ped;wire green,amber,walk;', 'clk=0;rst=1;ped=1;#1;clk=1;#1;if(!green) $stop;clk=0;rst=0;#1;clk=1;#1;if(!amber) $stop;', []],
+ ['decoder','BCD to seven-segment decoder','Active-high abcdefg segments; invalid BCD digits blank the display.', 'input [3:0] bcd,output reg [6:0] seg','always @* case(bcd) '+[126,48,109,121,51,91,95,112,127,123].map((v,i)=>i+':seg='+v+';').join(' ')+' default:seg=0;endcase','reg [3:0] bcd;wire [6:0] seg;', 'bcd=8;#1;if(seg!==127) $stop;bcd=12;#1;if(seg!==0) $stop;', [{label:'Digit eight',inputs:{bcd:8},expected:{seg:127}}]]
+];
+const designs={};
+for(const [name,title,summary,ports,body,decl,checks,vectors] of defs){
+ const verilog='module '+name+'('+ports+');\n'+body+'\nendmodule';
+ const testbench='\x60timescale 1ns/1ps\nmodule tb; '+decl+' '+name+' dut('+ports.split(',').map(x=>x.trim().split(/\s+/).at(-1)).join(',')+'); initial begin $dumpfile("wave.vcd");$dumpvars(0,tb);'+checks+' $display("PASS");$finish;end endmodule';
+ designs[name]={kind:'universal_rtl',engine:'universal_rtl',title,summary,module_name:name,verilog,testbench,sample_vectors:vectors,netlist_json:await synth(runYosys,verilog,name)};
+}
+await writeFile('web/catalog.mjs','export const catalog='+JSON.stringify(designs)+';\n');

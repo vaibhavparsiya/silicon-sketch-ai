@@ -1,0 +1,6 @@
+{
+  "name": "silicon-sketch",
+  "main": "dist/server/index.js",
+  "compatibility_date": "2026-01-01",
+  "r2_buckets": [{"binding":"BUCKET","bucket_name":"silicon-sketch-designs"}]
+}
