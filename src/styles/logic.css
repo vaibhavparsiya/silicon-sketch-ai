@@ -1,0 +1,164 @@
+#presets {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+#presets button,
+.ghost,
+#switches button,
+.vectors button {
+  background: transparent;
+  color: var(--text);
+  border-color: #526071;
+}
+#presets button {
+  border-radius: 15px;
+  padding: 3px 11px;
+}
+details {
+  margin-top: 10px;
+  color: var(--muted);
+  font-size: 14px;
+}
+summary {
+  cursor: pointer;
+  width: fit-content;
+}
+#msg {
+  color: var(--mint);
+  font-size: 14px;
+  margin: 8px 0 0;
+}
+#msg:empty {
+  display: none;
+}
+.grid {
+  display: grid;
+  grid-template-columns: minmax(0, 2.3fr) minmax(225px, 1fr);
+  gap: 16px;
+}
+.grid .panel {
+  margin: 0;
+}
+.panel h2 {
+  font-size: 28px;
+  margin-top: 4px;
+}
+.panel p {
+  font-size: 14px;
+  margin: 8px 0;
+}
+.head {
+  flex-wrap: wrap;
+}
+#state {
+  padding: 4px 10px;
+  border: 1px solid #687484;
+  border-radius: 4px;
+}
+#state.high,
+button[aria-pressed='true'] {
+  color: var(--mint);
+  border-color: var(--mint);
+  background: #263925;
+}
+#canvas {
+  background-color: #10161b;
+  background-image: radial-gradient(#39424b 1px, transparent 1px);
+  background-size: 13px 13px;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  margin: 18px 0;
+  display: grid;
+  align-items: center;
+  min-height: 210px;
+}
+svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+svg text {
+  fill: #ecf2f4;
+  font: 13px monospace;
+}
+.wire {
+  fill: none;
+  stroke: #8293a8;
+  stroke-width: 2;
+}
+.hot {
+  stroke: var(--mint);
+  stroke-width: 3;
+}
+.gate {
+  fill: #25303a;
+  stroke: #a0b1c4;
+}
+.lit {
+  fill: #314a28;
+  stroke: var(--mint);
+}
+.center {
+  text-anchor: middle;
+}
+.equation {
+  display: grid;
+  gap: 4px;
+  border-top: 1px solid var(--line);
+  margin-top: 13px;
+  padding-top: 12px;
+}
+code {
+  color: var(--mint);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+}
+th {
+  color: var(--muted);
+}
+td,
+th {
+  border-bottom: 1px solid var(--line);
+  padding: 2px;
+}
+.selected {
+  background: #293728;
+}
+td button {
+  padding: 2px 13px;
+  background: #202a33;
+  color: var(--text);
+  border-color: #53606d;
+}
+.cursor {
+  fill: #26382d;
+}
+#wave svg {
+  max-height: 185px;
+}
+.vectors {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.vectors button {
+  padding: 4px 9px;
+}
+.downloads {
+  flex-wrap: wrap;
+}
+pre {
+  padding: 16px;
+  background: #0d1319;
+  border-radius: 7px;
+  overflow: auto;
+  color: #c5e5ff;
+}
+main {
+  padding-bottom: 30px;
+}

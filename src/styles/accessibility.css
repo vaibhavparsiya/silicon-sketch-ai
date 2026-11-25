@@ -1,0 +1,65 @@
+#die {
+  max-width: 100%;
+  background: #0b0f19;
+}
+#layers label {
+  display: inline-block;
+  margin: 6px;
+}
+#proof {
+  overflow-wrap: anywhere;
+}
+
+#segments {
+  width: 60px;
+  height: 100px;
+}
+[hidden] {
+  display: none !important;
+}
+
+:where(a, button, input, select, summary, textarea, [tabindex]):focus-visible {
+  outline: 2px solid #a3e635;
+  outline-offset: 2px;
+}
+.skip {
+  position: absolute;
+  top: 0;
+  left: 12px;
+  z-index: 10;
+  transform: translateY(-150%);
+  background: #111827;
+  color: #f8fafc;
+  padding: 10px 14px;
+}
+.skip:focus {
+  transform: translateY(4px);
+}
+#diagram g:focus-visible rect {
+  stroke: #a3e635;
+  stroke-width: 3px;
+}
+
+input[type='file'],
+select,
+canvas {
+  max-width: 100%;
+}
+.grid > *,
+.head > *,
+.downloads,
+.equation {
+  min-width: 0;
+}
+@media (max-width: 640px) {
+  .grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  header nav {
+    flex-wrap: wrap;
+  }
+  #editor label[for='photo'] {
+    display: grid;
+    gap: 4px;
+  }
+}

@@ -1,0 +1,100 @@
+#scope {
+  overflow: auto;
+  background: #10171e;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 10px 0;
+  margin: 16px 0;
+}
+.wave-table {
+  width: max-content;
+  min-width: 100%;
+  table-layout: fixed;
+}
+.wave-table td {
+  min-width: 46px;
+  text-align: center;
+  height: 29px;
+}
+.wave-table th {
+  width: 70px;
+  position: sticky;
+  left: 0;
+  background: #10171e;
+  color: var(--muted);
+  z-index: 1;
+}
+.wave-table button {
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text);
+  min-width: 34px;
+}
+.wave-table button[aria-pressed='true'] {
+  border-color: var(--mint);
+  color: var(--mint);
+}
+.wave-table .level {
+  border: 1px solid #33434b;
+}
+.wave-table .up {
+  background: #1f352a;
+  border-top: 3px solid var(--mint);
+  color: #ceffae;
+}
+.wave-table .down {
+  border-bottom: 3px solid #71859b;
+}
+.edge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 24px 0;
+  font: 600 20px monospace;
+}
+.edge b,
+.edge strong {
+  border: 1px solid #687989;
+  padding: 8px 12px;
+  border-radius: 6px;
+}
+.edge b {
+  color: var(--blue);
+}
+.edge .pulse {
+  color: var(--mint);
+  border-color: var(--mint);
+}
+#why {
+  min-height: 44px;
+}
+#notice:empty {
+  display: none;
+}
+#score {
+  font: 600 15px monospace;
+  color: var(--mint);
+}
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+@media (max-width: 520px) {
+  header strong {
+    font-size: 18px;
+  }
+  header nav a {
+    font-size: 12px;
+    padding: 5px;
+  }
+  .clock-controls {
+    gap: 7px;
+  }
+  .clock-controls input {
+    max-width: 136px;
+  }
+  .clock-controls button {
+    padding: 8px;
+  }
+}

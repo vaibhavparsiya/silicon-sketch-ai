@@ -1,7 +1,10 @@
-*
-!web/
-!web/**
-!worker/
-!worker/**
-!scripts/
-!scripts/dev.mjs
+.git
+.local
+node_modules
+dist
+coverage
+.wrangler
+.env
+.env.*
+.dev.vars
+.dev.vars.*

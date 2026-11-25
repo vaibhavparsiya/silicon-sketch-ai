@@ -2,5 +2,6 @@
   "name": "silicon-sketch",
   "main": "dist/server/index.js",
   "compatibility_date": "2026-01-01",
-  "r2_buckets": [{"binding":"BUCKET","bucket_name":"silicon-sketch-designs"}]
+  "r2_buckets": [{"binding":"BUCKET","bucket_name":"silicon-sketch-designs"}],
+  "ratelimits": [{"name":"RATE_LIMIT","namespace_id":"1001","simple":{"limit":20,"period":60}}]
 }

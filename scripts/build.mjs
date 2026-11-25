@@ -1,7 +1,29 @@
-import {mkdir,readFile,readdir,writeFile,copyFile} from 'node:fs/promises';
-const assets={};
-for(const f of await readdir('web')) assets[f]=await readFile('web/'+f,'utf8');
-const parts=await Promise.all(['web/core.mjs','web/sequence.mjs','worker/contract.mjs','web/net.mjs','web/catalog.mjs','worker/rtl.mjs','worker/blind.mjs','worker/challenge.mjs','worker/interpreter.mjs','worker/server.mjs'].map(async f=>(await readFile(f,'utf8')).replace(/^import .*?;$/gm,'').replace(/^export /gm,'')));
-await mkdir('dist/server',{recursive:true});await mkdir('dist/.openai',{recursive:true});
-await writeFile('dist/server/index.js',parts.join('\n')+'\nconst assets='+JSON.stringify(assets)+';\nexport default {fetch(request,env){return handle(request,env,assets);}};\n');
-await copyFile('.openai/hosting.json','dist/.openai/hosting.json');
+import { mkdir, copyFile } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import { build } from 'esbuild';
+import { readAssets } from './assets.mjs';
+
+const assets = await readAssets();
+await mkdir('dist/server', { recursive: true });
+await build({
+  stdin: {
+    contents:
+      "import {handle} from './worker/server.mjs';\nconst assets=" +
+      JSON.stringify(assets) +
+      ';\nexport default {fetch(request,env){return handle(request,env,assets);}};',
+    resolveDir: resolve('.'),
+    sourcefile: 'entry.mjs',
+  },
+  outfile: 'dist/server/index.js',
+  bundle: true,
+  format: 'esm',
+  platform: 'browser',
+  target: 'es2022',
+  logLevel: 'silent',
+});
+try {
+  await mkdir('dist/.openai', { recursive: true });
+  await copyFile('.openai/hosting.json', 'dist/.openai/hosting.json');
+} catch (err) {
+  if (err.code !== 'ENOENT') throw err;
+}

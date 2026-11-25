@@ -1,0 +1,93 @@
+#shared a {
+  color: var(--blue);
+  overflow-wrap: anywhere;
+}
+#editor .downloads {
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin: 10px 0;
+}
+#mapping:not(:empty) {
+  font: 600 14px monospace;
+  color: var(--blue);
+}
+#source {
+  display: block;
+  width: 100%;
+  background: #10161e;
+  color: #c5e5ff;
+  border: 1px solid var(--line);
+  padding: 12px;
+  font: 14px/1.5 monospace;
+  margin: 8px 0 12px;
+}
+#diagram {
+  max-height: 420px;
+  overflow: auto;
+  background: #10161b;
+  margin-top: 12px;
+}
+#diagram svg {
+  width: auto;
+  max-width: none;
+  height: auto;
+}
+#diagram g {
+  cursor: pointer;
+}
+.ports > div {
+  margin: 10px 0;
+}
+.ports input {
+  width: 85px;
+}
+.ports button {
+  font-size: 11px;
+  padding: 5px;
+  margin-left: 3px;
+}
+.panel pre {
+  white-space: pre-wrap;
+}
+.panel #diff {
+  overflow-wrap: anywhere;
+}
+
+.insight {
+  border-top: 1px solid var(--line);
+  padding-top: 12px;
+}
+.insight summary {
+  font-weight: 650;
+  color: var(--text);
+}
+#prompt-status:empty,
+#vector-report:empty {
+  display: none;
+}
+#gate-reason,
+#overlap-comparison {
+  color: var(--blue);
+}
+#prompt-status {
+  font-size: 14px;
+  color: var(--mint);
+}
+@media (max-width: 640px) {
+  .command {
+    flex-wrap: wrap;
+  }
+  .command input {
+    flex-basis: 100%;
+  }
+  header {
+    height: auto;
+    min-height: 68px;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-block: 8px;
+  }
+  header strong {
+    white-space: nowrap;
+  }
+}

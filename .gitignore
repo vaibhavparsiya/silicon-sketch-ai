@@ -1,9 +1,10 @@
 /dist/
 /.local/
-/node_modules
-
+/coverage/
+/node_modules/
+/.wrangler/
 .env
 .env.*
+!.env.example
 .dev.vars
 .dev.vars.*
-.wrangler/

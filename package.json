@@ -1,1 +1,37 @@
-{"name":"silicon-sketch","private":true,"type":"module","scripts":{"start":"node scripts/dev.mjs","dev":"node scripts/dev.mjs","test":"node --test","build":"node scripts/build.mjs","examples":"node examples/build.mjs"},"devDependencies":{"@yowasp/yosys":"0.71.188-dev.1267","wrangler":"^4.0.0"}}
+{
+  "name": "silicon-sketch",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/dev.mjs",
+    "dev": "node scripts/dev.mjs",
+    "test": "node --test --experimental-test-coverage --test-coverage-include=\"shared/*\" --test-coverage-include=\"src/**/*\" --test-coverage-include=\"worker/*\" --test-coverage-include=\"web/*.mjs\" --test-coverage-lines=96",
+    "build": "node scripts/build.mjs",
+    "examples": "node examples/build.mjs",
+    "lint": "eslint . --max-warnings=0",
+    "prestart": "npm run build",
+    "predev": "npm run build",
+    "test:browser": "npm run build && node scripts/browser-check.mjs",
+    "format:check": "prettier --check \"shared/**/*.js\" \"src/**/*.{js,jsx,css}\" \"worker/*.mjs\" \"web/*.{mjs,css,html}\" \"scripts/*.mjs\" \"tests/*.mjs\" \"test-support/*.mjs\" \"*.test.mjs\" eslint.config.js"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.0.0",
+    "@yowasp/yosys": "0.71.188-dev.1267",
+    "axe-core": "^4.14.1",
+    "esbuild": "^0.28.2",
+    "eslint": "^9.0.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react-hooks": "^5.2.0",
+    "globals": "^15.0.0",
+    "jsdom": "^26.1.0",
+    "playwright-core": "^1.65.1",
+    "prettier": "^3.10.1",
+    "wrangler": "^4.0.0"
+  },
+  "dependencies": {
+    "preact": "^10.29.8"
+  },
+  "engines": {
+    "node": ">=22.16.0"
+  }
+}

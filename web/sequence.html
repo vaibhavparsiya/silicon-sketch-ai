@@ -1,9 +1,163 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#11151e"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; connect-src 'self'; style-src 'self'; script-src 'self'; base-uri 'none'; form-action 'none'"><title>Sequence Lab | Silicon Sketch AI</title><link rel="stylesheet" href="style.css"><script type="module" src="scope.mjs"></script></head><body>
-<a href="#pattern" class="skip">Skip to detector controls</a><header><strong><i aria-hidden="true">▦</i> Silicon Sketch AI</strong><nav aria-label="Design labs"><a href="./">Logic lab</a><a aria-current="page" href="sequence.html">Sequence lab</a><a href="/rtl">RTL &amp; GDSII lab ↗</a></nav></header>
-<main><section class="intro"><div><p class="kicker">SEQUENTIAL DESIGN LAB</p><h1>A circuit with <em>memory.</em></h1><p>Clock bits into a sequence detector. Follow the state it remembers after each edge.</p></div><div class="model"><small>ACTIVE PATTERN</small><output id="signature"></output></div></section><form id="lab-prompt"><label for="request">Describe your sequence detector</label><div class="command"><input id="request" maxlength="1000" required value="Detect 101 in 10101 with overlap"><button>Compile ↵</button><button type="submit" value="ai" class="ghost">Interpret with AI</button></div><p id="prompt-status" role="status"></p></form>
-<form id="design"><div class="clock-controls"><label>Detection pattern<input id="pattern" required maxlength="8" pattern="[01]{1,8}" value="101" autocomplete="off" spellcheck="false"></label><label>After a match<select id="mode"><option value="overlap">Allow overlap</option><option value="restart">Start fresh</option></select></label><button>Build detector</button></div><p id="designHint">Use 1–8 binary digits. Rebuilding replays your recorded stream.</p></form>
-<section class="panel"><div class="head"><div><small>CLOCK TRACE</small><h2>Sequence analyzer</h2></div><output id="score"></output></div><p>Read each column just after its rising clock edge. Select a cycle to inspect its transition.</p><div id="scope" tabindex="0" aria-label="Scrollable clock trace"></div><div class="clock-controls"><button type="button" id="zero">Clock 0</button><button type="button" id="one">Clock 1</button><button type="button" class="ghost" id="undo">Undo last edge</button><button type="button" class="ghost" id="reset">Reset trace</button></div>
-<form id="play"><label for="stream">Append a bit stream</label><div class="command"><input id="stream" value="10101" maxlength="96" required pattern="[01]+" autocomplete="off" spellcheck="false"><button>Clock stream →</button></div></form><p role="status" id="notice"></p></section>
-<div class="grid"><section class="panel"><div class="head"><div><small>EDGE INSPECTOR</small><h2 id="cycle"></h2></div></div><div class="edge" id="edge"></div><p id="why"></p><p id="overlap-comparison"></p><div class="downloads"><button id="prev" class="ghost">← Earlier</button><button id="next" class="ghost">Later →</button></div></section>
-<section class="panel"><div class="head"><div><small>STATE TRANSITIONS</small><h2>Detector memory</h2></div></div><p>Each cell shows next state / detection bit.</p><table><thead><tr><th>State</th><th>DIN 0</th><th>DIN 1</th></tr></thead><tbody id="states"></tbody></table></section></div>
-<section class="panel"><div class="head"><div><small>REGISTERED OUTPUT · SYNCHRONOUS RESET</small><h2>Detector hardware</h2></div><div class="downloads"><button id="rtl">Download RTL</button><button id="bench" class="ghost">Download trace testbench</button></div></div><details><summary>View generated Verilog</summary><pre id="code"></pre></details></section><section class="panel"><div class="head"><div><small>DESIGN SNAPSHOT</small><h2>Share this circuit</h2></div><button type="button" id="save">Create public link</button></div><p>Anyone with the link can open this snapshot. Changes create a separate version.</p><div id="shared" role="status"></div></section></main></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#11151e" />
+    <title>Sequence Lab | Silicon Sketch AI</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="scope.mjs"></script>
+  </head>
+  <body>
+    <a href="#main-content" class="skip">Skip to main content</a>
+    <header>
+      <strong><i aria-hidden="true">▦</i> Silicon Sketch AI</strong>
+      <nav aria-label="Design labs">
+        <a href="./">Logic lab</a><a aria-current="page" href="sequence.html">Sequence lab</a
+        ><a href="/rtl">RTL &amp; GDSII lab ↗</a>
+      </nav>
+    </header>
+    <main id="main-content" tabindex="-1">
+      <section class="intro">
+        <div>
+          <p class="kicker">SEQUENTIAL DESIGN LAB</p>
+          <h1>A circuit with <em>memory.</em></h1>
+          <p>Clock bits into a sequence detector. Follow the state it remembers after each edge.</p>
+        </div>
+        <div class="model"><small>ACTIVE PATTERN</small><output id="signature"></output></div>
+      </section>
+      <form id="lab-prompt">
+        <label for="request">Describe your sequence detector</label>
+        <div class="command">
+          <input
+            id="request"
+            maxlength="1000"
+            required=""
+            value="Detect 101 in 10101 with overlap"
+          /><button>Compile ↵</button
+          ><button type="submit" value="ai" class="ghost">Interpret with AI</button>
+        </div>
+        <p id="prompt-status" role="status" aria-live="polite"></p>
+      </form>
+      <form id="design">
+        <div class="clock-controls">
+          <label for="pattern"
+            >Detection pattern<input
+              id="pattern"
+              required=""
+              maxlength="8"
+              pattern="[01]{1,8}"
+              value="101"
+              autocomplete="off"
+              spellcheck="false"
+              aria-describedby="designHint" /></label
+          ><label for="mode"
+            >After a match<select id="mode">
+              <option value="overlap">Allow overlap</option>
+              <option value="restart">Start fresh</option>
+            </select></label
+          ><button>Build detector</button>
+        </div>
+        <p id="designHint">Use 1–8 binary digits. Rebuilding replays your recorded stream.</p>
+      </form>
+      <section class="panel">
+        <div class="head">
+          <div>
+            <small>CLOCK TRACE</small>
+            <h2>Sequence analyzer</h2>
+          </div>
+          <output id="score"></output>
+        </div>
+        <p>
+          Read each column just after its rising clock edge. Select a cycle to inspect its
+          transition.
+        </p>
+        <div id="scope" tabindex="0" aria-label="Scrollable clock trace" role="region"></div>
+        <div class="clock-controls">
+          <button type="button" id="zero">Clock 0</button
+          ><button type="button" id="one">Clock 1</button
+          ><button type="button" class="ghost" id="undo">Undo last edge</button
+          ><button type="button" class="ghost" id="reset">Reset trace</button>
+        </div>
+        <form id="play">
+          <label for="stream">Append a bit stream</label>
+          <div class="command">
+            <input
+              id="stream"
+              value="10101"
+              maxlength="96"
+              required=""
+              pattern="[01]+"
+              autocomplete="off"
+              spellcheck="false"
+            /><button>Clock stream →</button>
+          </div>
+        </form>
+        <p role="status" id="notice" aria-live="polite"></p>
+      </section>
+      <div class="grid">
+        <section class="panel">
+          <div class="head">
+            <div>
+              <small>EDGE INSPECTOR</small>
+              <h2 id="cycle" aria-live="polite"></h2>
+            </div>
+          </div>
+          <div class="edge" id="edge"></div>
+          <p id="why"></p>
+          <p id="overlap-comparison"></p>
+          <div class="downloads">
+            <button id="prev" class="ghost">← Earlier</button
+            ><button id="next" class="ghost">Later →</button>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="head">
+            <div>
+              <small>STATE TRANSITIONS</small>
+              <h2>Detector memory</h2>
+            </div>
+          </div>
+          <p>Each cell shows next state / detection bit.</p>
+          <table>
+            <thead>
+              <tr>
+                <th>State</th>
+                <th>DIN 0</th>
+                <th>DIN 1</th>
+              </tr>
+            </thead>
+            <tbody id="states"></tbody>
+          </table>
+        </section>
+      </div>
+      <section class="panel">
+        <div class="head">
+          <div>
+            <small>REGISTERED OUTPUT · SYNCHRONOUS RESET</small>
+            <h2>Detector hardware</h2>
+          </div>
+          <div class="downloads">
+            <button id="rtl">Download RTL</button
+            ><button id="bench" class="ghost">Download trace testbench</button>
+          </div>
+        </div>
+        <details>
+          <summary>View generated Verilog</summary>
+          <pre id="code"></pre>
+        </details>
+      </section>
+      <section class="panel">
+        <div class="head">
+          <div>
+            <small>DESIGN SNAPSHOT</small>
+            <h2>Share this circuit</h2>
+          </div>
+          <button type="button" id="save">Create public link</button>
+        </div>
+        <p>Anyone with the link can open this snapshot. Changes create a separate version.</p>
+        <div id="shared" role="status" aria-live="polite"></div>
+      </section>
+    </main>
+  </body>
+</html>

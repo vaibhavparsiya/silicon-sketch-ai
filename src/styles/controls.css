@@ -1,0 +1,96 @@
+@media (max-width: 760px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .model,
+  header span {
+    display: none;
+  }
+  .intro {
+    margin: 23px 0;
+  }
+  .downloads button {
+    padding: 6px;
+  }
+  .command button {
+    padding: 11px 8px;
+  }
+  #canvas {
+    min-height: 150px;
+  }
+  .vectors button {
+    padding: 4px;
+  }
+  .probes {
+    flex-wrap: wrap;
+  }
+}
+select {
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid #697986;
+  border-radius: 4px;
+  padding: 6px;
+  font: inherit;
+}
+.downloads label {
+  font-size: 13px;
+}
+.downloads {
+  justify-content: flex-start;
+}
+#fault:not(:empty) {
+  margin-top: 12px;
+  border-left: 3px solid var(--mint);
+  padding-left: 14px;
+}
+header nav {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+header nav a {
+  font: 600 14px/1.4 system-ui;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 7px 10px;
+  border-radius: 5px;
+}
+header nav a[aria-current='page'] {
+  background: #263729;
+  color: var(--mint);
+}
+header nav a:hover {
+  color: white;
+}
+.clock-controls {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.clock-controls label {
+  display: grid;
+  gap: 5px;
+}
+.clock-controls select {
+  padding: 11px;
+}
+.clock-controls input {
+  max-width: 200px;
+}
+.model #signature {
+  font: bold clamp(24px, 3vw, 42px) monospace;
+  color: var(--blue);
+}
+#designHint {
+  margin: 10px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+#play {
+  padding: 0;
+  border: 0;
+  background: none;
+  margin: 18px 0 0;
+}

@@ -1,0 +1,158 @@
+:root {
+  color-scheme: dark;
+  --bg: #0b0f19;
+  --panel: #111827;
+  --line: #1e293b;
+  --text: #f5f5e9;
+  --muted: #cbd5e1;
+  --mint: #a3e635;
+  --blue: #8ec9ff;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font:
+    16px/1.5 'Space Grotesk',
+    'Inter',
+    system-ui,
+    sans-serif;
+}
+header,
+main {
+  max-width: 1260px;
+  margin: auto;
+  padding: 0 clamp(16px, 4vw, 60px);
+}
+header {
+  height: 68px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+}
+header strong {
+  font-size: 24px;
+  letter-spacing: -1.2px;
+}
+header i {
+  color: var(--mint);
+  font-style: normal;
+}
+header span,
+.intro p,
+.panel p {
+  color: var(--muted);
+}
+header span,
+small,
+.kicker,
+code,
+pre,
+button,
+#hex,
+#state,
+td,
+th {
+  font-family: 'IBM Plex Mono', ui-monospace, monospace;
+}
+.intro,
+.head,
+.command,
+.probes,
+.downloads,
+#switches,
+#presets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.intro {
+  margin: 34px 0 28px;
+}
+.intro p {
+  margin: 5px 0;
+}
+.intro .kicker,
+small {
+  font-size: 11px;
+  letter-spacing: 0.13em;
+  font-weight: bold;
+  color: #bbcad6;
+}
+.intro .kicker {
+  color: var(--mint);
+}
+h1,
+h2 {
+  margin: 0;
+  letter-spacing: -0.055em;
+  line-height: 1.05;
+}
+h1 {
+  font-size: clamp(38px, 5.7vw, 80px);
+  margin: 6px 0 13px;
+}
+h1 em {
+  font-style: normal;
+  color: var(--mint);
+}
+.model {
+  border-left: 2px solid var(--mint);
+  padding-left: 15px;
+  display: grid;
+}
+#hex {
+  font-size: 38px;
+}
+form,
+.panel {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--panel);
+  padding: clamp(15px, 2vw, 25px);
+  margin: 15px 0;
+}
+form label,
+.probes strong {
+  font-weight: 650;
+  font-size: 14px;
+}
+.command {
+  margin: 8px 0 12px;
+}
+input {
+  color: var(--text);
+  background: #0e1218;
+  border: 1px solid #586574;
+  border-radius: 5px;
+  font: 16px/1.5 monospace;
+  padding: 10px;
+  min-width: 0;
+  flex: 1;
+}
+button {
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 700;
+  color: #090d16;
+  background: var(--mint);
+  border: 1px solid var(--mint);
+  border-radius: 5px;
+  padding: 10px 15px;
+}
+button:hover {
+  filter: brightness(1.18);
+}
+code,
+pre,
+button,
+input,
+td,
+th {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
